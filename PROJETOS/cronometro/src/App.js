@@ -45,6 +45,7 @@ class App extends Component {
         while (list.hasChildNodes()) {
             list.removeChild(list.firstChild);
           }
+        this.setState({quantSalva:0})
         
     }
 
