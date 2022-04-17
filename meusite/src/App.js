@@ -1,47 +1,46 @@
 import React, {Component} from 'react'
-import './estilo.css'
+import './style.css'
+//https://sujeitoprogramador.com/rn-api/?api=posts
+
 
 class App extends Component{
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            textoFrase: ""
+            nutri: []
         }
-
-        this.frases = ['Siga os bons e aprenda com eles.', 'O bom-senso vale mais do que muito conhecimento.', 
-        'O riso é a menor distância entre duas pessoas.', 
-        'Deixe de lado as preocupações e seja feliz.',
-        'Realize o óbvio, pense no improvável e conquiste o impossível.',
-        'Acredite em milagres, mas não dependa deles.',
-        'A maior barreira para o sucesso é o medo do fracasso.']
-
-        this.quebraBiscoito = this.quebraBiscoito.bind(this)
     }
 
-    quebraBiscoito() {
-        let state = this.state
-        let numeroAleatorio = Math.floor(Math.random() * this.frases.length)
-        state.textoFrase = '" ' + this.frases[numeroAleatorio] + ' "'
-        this.setState(state)
+    componentDidMount() {
+        let url = 'https://sujeitoprogramador.com/rn-api/?api=posts'
+        fetch(url)
+            .then((resposta) => resposta.json())
+            .then((json)=> {
+                let state = this.state;
+                state.nutri = json
+                this.setState(state)
+                // console.log(json)
+            })
     }
 
     render() {
         return(
-            <div className='container'>
-              <img src={require('./assets/biscoito.png')} className="img" />
-              <Botao nome='Abrir biscoito' acaoBtn={this.quebraBiscoito} />
-              <h3 className='textoFrase'>{this.state.textoFrase}</h3>
-            </div>
-        )
-    }
-}
+            <div className="container">
+                <header>
+                    <strong>React Nutri</strong>
+                </header>
+                {this.state.nutri.map((item) => {
+                    return(
+                        <article key={item.id} className="post" >
+                            <strong className="titulo"> {item.titulo} </strong>
+                            <img src={item.capa} className="capa" />
+                            <p className="subtitulo">{item.subtitulo}</p>
+                            <a className='btn' href="#">Ler mais...</a>
+                        </article>
+                    )
+                })}
 
-class Botao extends Component {
-    render() {
-        return(
-            <div>
-                <button onClick={this.props.acaoBtn}>{this.props.nome}</button>
             </div>
         )
     }
