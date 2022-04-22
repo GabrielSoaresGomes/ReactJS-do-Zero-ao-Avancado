@@ -6,7 +6,6 @@ class Sobre extends React.Component{
         return(
             <div>
                 <h2>Sobre</h2>
-                <Link to="/">Ir para home</Link>
             </div>
         )
     }
