@@ -1,54 +1,29 @@
-import React, {Component} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
+import './filme-info.css'
 
+const Filme = (props) => {
+    const [filme, setFilme] = useState([])
 
-function extrairId(component) {
-    function ID(props) {
-        let params = useParams()
-        return <Component {...props} params={params} />
-    }
-    return ID
-}
+    const { id } = useParams()
 
-class Filme extends Component{
-
-    constructor(props){
-        super(props)
-
-        this.state = {
-            filme: [],
-            id: ""
-        }
-    }
-
-   
-
-    componentDidMount() {
-        this.setState({ id: this.props.params.id })
-        let url = `https://sujeitoprogramador.com/r-api/?api=filmes/${this.state.id}`
-        fetch(url).then( (r) => r.json() ).then( (json) => {
-            this.setState({ filme:json })
+    let url = `https://sujeitoprogramador.com/r-api/?api=filmes/${id}`
+    useEffect( () => {
+        fetch(url).then( (response) => response.json() ).then( (json) => {
+            setFilme(json)
             console.log(json)
         } )
-    }
+    },[])
 
-    static getDerivedStateFromProps(nextProps) {
-        return {
-          id : nextProps.params.id
-        }
-      }
-      fetchData = id => {
-          // ...
-      };
-
-    render() {
-        return (
-            <div>
-                    <h1>Filme Unico</h1>
-            </div>
-        )
-    }
+    return (
+        <div className='filme-info'>
+            <h1>{filme.nome}</h1>
+            <img src={filme.foto} alt={`Foto do filme ${filme.nome}`} />
+            {filme.length !== 0 && 
+            <h2>Sinopse</h2>}
+            <p>{filme.sinopse}</p>
+        </div>
+    )
 }
 
-const HOCTaskDetail = extrairId(Filme);
-export default HOCTaskDetail;
+export default Filme
