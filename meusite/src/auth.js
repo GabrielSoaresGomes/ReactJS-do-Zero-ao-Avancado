@@ -1,0 +1,5 @@
+
+
+const autenticado = () => {
+    return false;
+}

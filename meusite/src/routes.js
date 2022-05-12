@@ -1,22 +1,17 @@
 import React from "react";
-import {BrowserRouter, Routes, Route, } from 'react-router-dom'
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 
-import Home from "./pages/Home";
-import Sobre from "./pages/Sobre";
-import HOCTaskDetail from "./pages/Produto";
-import Erro from './pages/Erro'
+import Home from "./pages/Home/Home";
+import Painel from "./pages/Painel/Painel";
 
-import Header from "./components/Header";
-
+import {autenticado} from "./auth"
 const Rotas = () => {
     return(
         <BrowserRouter>
-        <Header />
             <Routes>
                 <Route exact path="/" element={<Home/>} />
-                <Route path="/sobre" element={<Sobre/>} />
-                <Route path="/produto/:id" element={<HOCTaskDetail/>} />
-                <Route path="*" element={<Erro />} />
+                <Route exact path="/painel" element={<Painel/>} />
+
             </Routes>
         </BrowserRouter>
     )
