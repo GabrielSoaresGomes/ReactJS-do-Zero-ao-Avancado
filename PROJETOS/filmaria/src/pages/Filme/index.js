@@ -13,7 +13,7 @@ const Filme = (props) => {
             setFilme(json)
             console.log(json)
         } )
-    },[])
+    },[url])
 
     return (
         <div className='filme-info'>

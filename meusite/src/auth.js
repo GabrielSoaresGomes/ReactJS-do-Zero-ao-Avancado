@@ -1,5 +1,5 @@
 
 
-const autenticado = () => {
+export const autenticado = () => {
     return false;
 }
